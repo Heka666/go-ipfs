@@ -3,11 +3,13 @@ package libp2p
 import (
 	"fmt"
 
+	certbot "github.com/marten-seemann/go-libp2p-certbot"
+
 	config "github.com/ipfs/go-ipfs-config"
-	libp2p "github.com/libp2p/go-libp2p"
-	metrics "github.com/libp2p/go-libp2p-core/metrics"
+	"github.com/libp2p/go-libp2p"
+	"github.com/libp2p/go-libp2p-core/metrics"
 	libp2pquic "github.com/libp2p/go-libp2p-quic-transport"
-	tcp "github.com/libp2p/go-tcp-transport"
+	"github.com/libp2p/go-tcp-transport"
 	websocket "github.com/libp2p/go-ws-transport"
 
 	"go.uber.org/fx"
@@ -25,7 +27,12 @@ func Transports(tptConfig config.Transports) interface{} {
 		}
 
 		if tptConfig.Network.Websocket.WithDefault(true) {
-			opts.Opts = append(opts.Opts, libp2p.Transport(websocket.New))
+			certManager, err := certbot.New()
+			if err != nil {
+				return opts, err
+			}
+			opts.Opts = append(opts.Opts, libp2p.CertificateManager(certManager))
+			opts.Opts = append(opts.Opts, libp2p.Transport(websocket.New, websocket.WithTLSConfig(certManager.GetTLSConfig())))
 		}
 
 		if tptConfig.Network.QUIC.WithDefault(!privateNetworkEnabled) {

@@ -222,7 +222,7 @@ var testConfig = `
 func TestReadMigrationConfigDefaults(t *testing.T) {
 	tmpDir := makeConfig(t, "{}")
 
-	cfg, err := ReadMigrationConfig(tmpDir)
+	cfg, err := ReadMigrationConfig(tmpDir, "")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -73,7 +73,7 @@ require (
 	github.com/libp2p/go-libp2p-http v0.2.1
 	github.com/libp2p/go-libp2p-kad-dht v0.15.0
 	github.com/libp2p/go-libp2p-kbucket v0.4.7
-	github.com/libp2p/go-libp2p-loggables v0.1.0
+	github.com/libp2p/go-libp2p-loggables v0.2.0
 	github.com/libp2p/go-libp2p-mplex v0.4.1
 	github.com/libp2p/go-libp2p-noise v0.3.0
 	github.com/libp2p/go-libp2p-peerstore v0.4.0
